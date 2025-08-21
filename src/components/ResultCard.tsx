@@ -1,6 +1,6 @@
 import React from "react";
 import { Result } from "../types";
-import { Trophy, Medal, Award, User, Hash, BookOpen, Star } from "lucide-react";
+import { Trophy, Medal, Award, User, Hash, BookOpen, Star, CheckCircle, Heart, Sparkles } from "lucide-react";
 import { getCategoryColor, getGradeColor } from "../utils/contestStats";
 
 interface ResultCardProps {
@@ -31,6 +31,28 @@ export const ResultCard: React.FC<ResultCardProps> = ({ student }) => {
     return "from-green-500 to-blue-500";
   };
 
+  const getSuccessMessage = (grade: number) => {
+    if (grade >= 90) {
+      return {
+        message: "مبروك! لقد نجحت بتفوق في المسابقة",
+        subMessage: "أداء ممتاز ومشرف، استمر في حفظ كتاب الله",
+        icon: <CheckCircle className="w-8 h-8 text-green-500 animate-pulse" />,
+        bgColor: "from-green-500 to-emerald-500",
+        textColor: "text-green-100"
+      };
+    } else {
+      return {
+        message: "لا تيأس، المحاولة القادمة ستكون أفضل بإذن الله",
+        subMessage: "كل خطوة في طريق حفظ القرآن لها أجر عظيم، واصل المحاولة",
+        icon: <Heart className="w-8 h-8 text-orange-500 animate-pulse" />,
+        bgColor: "from-orange-500 to-yellow-500",
+        textColor: "text-orange-100"
+      };
+    }
+  };
+
+  const successInfo = getSuccessMessage(student.grade);
+
   return (
     <div className="max-w-2xl mx-auto animate-fadeIn">
       <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl shadow-2xl overflow-hidden border border-blue-100">
@@ -40,7 +62,9 @@ export const ResultCard: React.FC<ResultCardProps> = ({ student }) => {
             {getRankIcon(student.rank!)}
             <h3 className="text-2xl font-bold">{getRankText(student.rank!)}</h3>
           </div>
-          <p className="text-white/90">تهانينا على هذا الإنجاز الرائع!</p>
+          <p className="text-white/90">
+            {student.grade >= 90 ? "تهانينا على هذا الإنجاز الرائع!" : "شكراً لمشاركتك في المسابقة"}
+          </p>
         </div>
 
         {/* Student details */}
@@ -93,17 +117,58 @@ export const ResultCard: React.FC<ResultCardProps> = ({ student }) => {
           </div>
         </div>
 
-        {/* Footer message */}
-        <div className="bg-gradient-to-r from-green-500 to-blue-500 text-white p-4 text-center">
-          <p className="font-semibold">
-            {student.grade >= 95
-              ? "أداء ممتاز! استمر في التميز"
-              : student.grade >= 85
-              ? "أداء جيد جداً! مبروك"
-              : student.grade >= 75
-              ? "أداء جيد! يمكنك تحسين أكثر"
-              : "حاول مرة أخرى! النجاح يحتاج إلى مثابرة"}
-          </p>
+        {/* Success/Encouragement message */}
+        <div className={`bg-gradient-to-r ${successInfo.bgColor} text-white p-6 text-center relative overflow-hidden`}>
+          {/* Background decorative elements */}
+          <div className="absolute top-2 right-4 opacity-20">
+            <Sparkles className="w-12 h-12 animate-spin-slow" />
+          </div>
+          <div className="absolute bottom-2 left-4 opacity-15">
+            <BookOpen className="w-10 h-10 animate-bounce-slow" />
+          </div>
+          
+          <div className="relative z-10">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              {successInfo.icon}
+              <h4 className={`text-xl font-bold ${successInfo.textColor}`}>
+                {successInfo.message}
+              </h4>
+            </div>
+            
+            <p className={`text-lg ${successInfo.textColor} mb-4`}>
+              {successInfo.subMessage}
+            </p>
+            
+            {student.grade >= 90 ? (
+              <div className="space-y-2">
+                <p className="text-white/90 font-semibold">
+                  🎉 درجة النجاح: {student.grade} من 100
+                </p>
+                <p className="text-white/80 text-sm">
+                  "وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ"
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-white/90 font-semibold">
+                  📚 درجتك: {student.grade} من 100
+                </p>
+                <p className="text-white/80 text-sm">
+                  "وَمَن جَاهَدَ فَإِنَّمَا يُجَاهِدُ لِنَفْسِهِ ۚ إِنَّ اللَّهَ لَغَنِيٌّ عَنِ الْعَالَمِينَ"
+                </p>
+                <div className="mt-4 p-3 bg-white/20 rounded-xl">
+                  <p className="text-white font-semibold text-sm">
+                    💪 نصائح للمرة القادمة:
+                  </p>
+                  <ul className="text-white/90 text-sm mt-2 space-y-1">
+                    <li>• راجع الأجزاء يومياً</li>
+                    <li>• اطلب المساعدة من المحفظ</li>
+                    <li>• ادع الله أن يعينك على الحفظ</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

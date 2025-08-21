@@ -197,6 +197,8 @@ export const searchRecitersWithCache = async (searchTerm: string): Promise<Recit
 // API للبحث عن النتائج
 export const searchResults = async (searchTerm: string): Promise<Result[]> => {
   try {
+    console.log('Searching for:', searchTerm);
+    
     const { data, error } = await supabase
       .from('reciterResults')
       .select('*')
@@ -204,6 +206,8 @@ export const searchResults = async (searchTerm: string): Promise<Result[]> => {
       .order('grade', { ascending: false });
 
     if (error) throw error;
+    
+    console.log('Search results:', data);
     
     // إضافة الترتيب للنتائج
     const rankedResults = (data || []).map((result, index) => ({

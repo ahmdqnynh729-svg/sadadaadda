@@ -86,7 +86,7 @@ export const AllResultsSection: React.FC<AllResultsSectionProps> = ({ students, 
                     </div>
                     
                     <h3 className={`text-3xl md:text-4xl font-bold mb-4 animate-fadeInScale ${isDarkMode ? 'text-orange-200' : 'text-orange-800'}`}>
-                      لا توجد نتائج متاحة حالياً
+                      النتائج ستُنشر قريباً إن شاء الله
                     </h3>
                     
                     <div className={`backdrop-blur-sm rounded-2xl p-6 mb-6 border transition-colors duration-300 ${
@@ -95,10 +95,10 @@ export const AllResultsSection: React.FC<AllResultsSectionProps> = ({ students, 
                         : 'bg-white/70 border-orange-100'
                     }`}>
                       <p className={`text-lg md:text-xl leading-relaxed mb-4 ${isDarkMode ? 'text-orange-200' : 'text-orange-700'}`}>
-                        النتائج ستكون متاحة قريباً إن شاء الله
+                        جاري تصحيح الاختبارات وستُعلن النتائج فور الانتهاء
                       </p>
                       <p className={`font-semibold ${isDarkMode ? 'text-orange-300' : 'text-orange-600'}`}>
-                        يرجى المحاولة مرة أخرى لاحقاً
+                        ترقبوا الإعلان عن النتائج في الأيام القادمة
                       </p>
                     </div>
                     
